@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ansh Thakare | AI & Data Science</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+        }
+        .bg-grid {
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .glass-effect {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .typing-cursor {
+            border-right: 2px solid #6366f1; /* Indigo color */
+            animation: blink 0.7s steps(1) infinite;
+        }
+        .cert-preview {
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            height: 150px; /* Adjust as needed */
+            object-fit: cover;
+            border-radius: 0.5rem; /* 8px */
+            margin-bottom: 1rem; /* 16px */
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        .project-hidden, .cert-hidden {
+            display: none;
+        }
+        .slide-in-from-left {
+            animation: slide-in-left 0.5s forwards;
+        }
+        .slide-in-from-right {
+            animation: slide-in-right 0.5s forwards;
+        }
+        .slide-in-from-bottom {
+            animation: slide-in-bottom 0.5s forwards;
+        }
+        @keyframes slide-in-left {
+            from {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slide-in-right {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        @keyframes slide-in-bottom {
+            from {
+                opacity: 0;
+                transform: translateY(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+<body class="text-gray-200 bg-gray-900">
+
+    <!-- Background Gradient and Grid -->
+    <div class="fixed inset-0 z-[-1] bg-gradient-to-br from-gray-900 via-black to-gray-800 bg-grid"></div>
+
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-50 glass-effect">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">AT<span class="text-indigo-400">.</span></a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="hover:text-indigo-400 transition duration-300">About</a>
+                <a href="#skills" class="hover:text-indigo-400 transition duration-300">Skills</a>
+                <a href="#projects" class="hover:text-indigo-400 transition duration-300">Projects</a>
+                <a href="#certificates" class="hover:text-indigo-400 transition duration-300">Certificates</a>
+                <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4">
+            <a href="#about" class="block py-2 hover:text-indigo-400 transition duration-300">About</a>
+            <a href="#skills" class="block py-2 hover:text-indigo-400 transition duration-300">Skills</a>
+            <a href="#projects" class="block py-2 hover:text-indigo-400 transition duration-300">Projects</a>
+            <a href="#certificates" class="block py-2 hover:text-indigo-400 transition duration-300">Certificates</a>
+            <a href="#contact" class="block mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg text-center transition duration-300">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <!-- Hero Section -->
+        <section id="home" class="min-h-screen flex flex-col-reverse md:flex-row items-center justify-center pt-24 md:pt-0">
+            <div class="md:w-1/2 text-center md:text-left">
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+                    Ansh Thakare
+                </h1>
+                <h2 class="text-2xl md:text-3xl text-indigo-400 mt-2">
+                    <span id="typing-effect"></span><span class="typing-cursor"></span>
+                </h2>
+                <p class="mt-4 text-lg text-gray-400 max-w-xl">
+                    Aspiring AI and Data Science professional with a passion for building innovative solutions and a proven track record of discipline from competitive sports.
+                </p>
+                <div class="mt-8 flex justify-center md:justify-start space-x-6 text-3xl">
+                    <a href="https://www.linkedin.com/in/ansh-thakare-053783359" target="_blank" class="text-gray-400 hover:text-indigo-400 transition duration-300"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/ash.thakare_22" target="_blank" class="text-gray-400 hover:text-indigo-400 transition duration-300"><i class="fab fa-instagram"></i></a>
+                </div>
+                 <div class="mt-8 flex justify-center md:justify-start space-x-4">
+                    <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">Get in Touch</a>
+                    <a href="./assets/Ansh_Thakare_Resume.pdf" id="resume-download-link" download class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">Download Resume</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center p-8">
+                <!-- Add your photo path here in the src attribute -->
+                <img src="certificates\ansh_pfp.jpg" alt="Ansh Thakare" class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-indigo-500 shadow-2xl shadow-indigo-500/20">
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="py-20">
+             <h2 class="text-4xl font-bold text-center mb-12">About Me</h2>
+             <div class="flex flex-col md:flex-row items-center gap-12 glass-effect p-8 rounded-xl">
+                <div class="md:w-2/3">
+                    <h3 class="text-2xl font-semibold text-indigo-400 mb-4">Who I Am</h3>
+                    <p class="text-gray-300 mb-4">
+                        I am a dedicated student at MIT World Peace University, pursuing a career in Artificial Intelligence and Data Science. My academic journey is driven by a fascination for how data can be transformed into intelligent action and meaningful insights.
+                    </p>
+                    <p class="text-gray-300">
+                        Beyond the classroom, I am a passionate creator, constantly engaged in building projects that challenge me and expand my skill set. My background as a national-level basketball player has instilled in me a deep sense of discipline, teamwork, and a relentless drive to succeed—qualities I bring to every technical endeavor.
+                    </p>
+                </div>
+                <div class="md:w-1/3 text-center">
+                     <i class="fas fa-basketball-ball text-9xl text-indigo-500/50"></i>
+                     <p class="mt-4 text-lg font-semibold">National Level Athlete</p>
+                     <p class="text-sm text-gray-400">Discipline & Teamwork</p>
+                </div>
+             </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-12">My Tech Stack</h2>
+            <div id="skills-container" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <!-- Skills will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-12">Featured Projects</h2>
+            <div id="featured-projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" style="display: none;"></div>
+            <div class="text-center mt-12">
+                <button id="view-all-projects-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">View All Projects</button>
+                <button id="minimize-projects-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 hidden">Minimize Projects</button>
+            </div>
+        </section>
+
+        <!-- Certificates Section -->
+        <section id="certificates" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-12">Achievements & Certifications</h2>
+            <div id="featured-certificates-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+            <div id="other-certificates-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" style="display: none;"></div>
+            <div class="text-center mt-12">
+                <button id="view-all-certificates-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">View All Certificates</button>
+                <button id="minimize-certificates-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 hidden">Minimize Certificates</button>
+            </div>
+        </section>
+
+        <!-- Certificate Modal -->
+        <div id="certificate-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+            <div class="relative max-w-4xl max-h-full p-4">
+                <button id="modal-close-button" class="absolute top-4 right-4 text-white text-3xl font-bold">&times;</button>
+                <img id="modal-image" src="" alt="Certificate" class="w-full h-auto rounded-lg">
+            </div>
+        </div>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-12">Let's Connect</h2>
+            <div class="glass-effect max-w-4xl mx-auto p-8 rounded-xl">
+                <p class="text-center text-gray-300 mb-8">
+                    Have a project in mind, a question, or just want to say hi? Feel free to reach out. I'm always open to discussing new ideas and opportunities.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                     <!-- Direct Email Option -->
+                    <a href="mailto:thakareansh3@gmail.com" class="w-full md:w-auto flex items-center justify-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                        <i class="fas fa-envelope"></i> Send an Email
+                    </a>
+                    <!-- WhatsApp Option -->
+                    <a href="https://wa.me/919226139414" target="_blank" class="w-full md:w-auto flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                        <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                    </a>
+                </div>
+                <div class="text-center mt-8 text-gray-400">
+                    <p>Email: <a href="mailto:thakareansh3@gmail.com" class="text-indigo-400">thakareansh3@gmail.com</a></p>
+                    <p>Phone: +91 9226139414</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-6 border-t border-gray-800">
+        <p class="text-gray-500">&copy; 2024 Ansh Thakare. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        // --- DATA CONFIGURATION ---
+        // Edit the data below to update your portfolio easily.
+
+        // RESUME
+        // Place your resume in a folder (e.g., 'assets') and update the path here.
+        const resumePath = './assets/Ansh_Thakare_Resume.pdf'; 
+
+        // SKILLS
+        // Add or remove skills. Find icons at fontawesome.com.
+        const skills = [
+            { name: 'Python', icon: 'fab fa-python' },
+            { name: 'Java', icon: 'fab fa-java' },
+            { name: 'JavaScript', icon: 'fab fa-js-square' },
+            { name: 'HTML5', icon: 'fab fa-html5' },
+            { name: 'CSS3', icon: 'fab fa-css3-alt' },
+            { name: 'SQL', icon: 'fas fa-database' },
+           // { name: 'React', icon: 'fab fa-react' },
+            { name: 'Node.js', icon: 'fab fa-node-js' },
+            //{ name: 'TensorFlow', icon: 'fas fa-brain' },
+            //{ name: 'Git', icon: 'fab fa-git-alt' },
+        ];
+
+        // PROJECTS
+        // Add your project details here.
+        const projects = [
+            {
+                title: 'Student Attendance Tracker – Python + Streamlit',
+                description: 'A web application for the teachers to mark the attendance of students in their respective classes. The app allows teachers to create classes, add students, and mark attendance for each session. It also provides a summary of attendance records for each student and class.',
+                stack: ['Python', 'Streamlit', 'SQL','Supabase'],
+                liveLink: 'https://attendancestraker.onrender.com'
+            },
+            {
+                title: 'Capstone Final Year Project for Polytechnic MIT WPU',
+                description: 'MIT Capstone Registration App is a full-stack web application built to automate and streamline the entire capstone project registration process. It features multi-role dashboards for students, mentors, and HODs, with automated mentor allocation that forwards rejected teams to their next preference. The app also includes an AI-powered idea similarity checker to prevent duplicate project submissions and ensure originality.',
+                stack: ['JavaScript', 'HTML', 'CSS', 'Node.js', 'Supabase'],
+                liveLink: 'https://mitcapstoneregistration.netlify.app/ ',
+                featured: true
+            },
+            {
+                title: 'SIH 2025 problem statement 1 - FANET based Drone Communication Platform',
+                description: 'A FANET-based communication platform for drones, enabling real-time data exchange and coordination in swarm operations.',
+                stack: ['Python', 'FANET', 'Artificial Intelligence', 'Machine Learning'],
+                liveLink: 'https://neuromesh.onrender.com/ ',
+                featured: true
+            },
+            {
+                title: 'SIH 2025 project 2- Block Chain Based Blue Carbon Registry and MRV  System (SIH25038) ',
+                description: 'A blockchain-based system for tracking and verifying blue carbon credits, ensuring transparency and accountability in carbon offset projects.',
+                stack: ['Blockchain', 'Type Script', 'Machine Learning'],
+                liveLink: 'https://sih2k25.netlify.app/',
+                featured: true
+            },
+            {
+                title: 'Polytechnic Ideathon 2024 - Helment Based Accident and Hazard Detection System',
+                description: 'A helmet equipped with sensors to detect accidents and hazardous conditions, sending real-time alerts to emergency contacts and services.',
+                stack: ['Html'],
+                liveLink: 'https://neuroguard.netlify.app/'
+            },
+            {
+                title: 'Project Based Learning - An simple english to SQL converter using NLP',
+                description: 'English to SQL Converter is a web application that leverages Natural Language Processing (NLP) to translate user-inputted English queries into SQL commands. This tool simplifies database interactions for users without SQL knowledge, allowing them to retrieve and manipulate data through intuitive English phrases.',
+                stack: ['Python', 'NLP','SQL'],
+                liveLink: 'https://english-to-sql-pbl2.onrender.com'
+            }
+        ];
+
+        // CERTIFICATES
+        // Add your certificate details here. Place certificate files in a folder.
+        const certificates = [
+
+            { 
+                name: 'SIH 2023 Participation certificate', 
+                issuer: 'SMART INDIA HACKATHON',
+                path: 'certificates/Ansh_sih_2023.png' 
+            },
+            { 
+                name: 'Power Bi certification powered by Microsoft', 
+                issuer: 'simplilearn',
+                path: 'certificates/POWER_BI.png',
+                featured: true
+            },
+            { 
+                name: 'SIH 2025 Participant Completed the internals successfully and now are in the final round selection criteria', 
+                issuer: 'Avinya- MIT WPU',
+                path: 'certificates/SIH_2k25.jpg',
+                featured: true
+            },
+            { 
+                name: 'Internship on Data Science and Machine Learning', 
+                issuer: 'People Connexions',
+                path: 'certificates/Ansh_internship.png',
+                featured: true
+            },
+
+            { 
+                name: 'Baseketball committee member of MIT WPU Polytechnic', 
+                issuer: 'MIT WPU Polytechnic',
+                path: 'certificates/commite_basketball.jpg'
+            },
+
+            { 
+                name: 'Flames University Football Winner', 
+                issuer: 'Flames University',
+                path: 'certificates/flames_basketball_win.jpg'
+            },
+
+            { 
+                name: 'Interdepartments Basketball Runner Up', 
+                issuer: 'MIT WPU Polytechnic',
+                path: 'certificates/Inter_depts_runnerUp.jpg'
+            },
+
+            { 
+                name: 'Participated in Junior NBA 2019-2020', 
+                issuer: 'National Basketball Academy',
+                path: 'certificates/junior_nba.jpg'
+            },
+
+            { 
+                name: 'Interdepartments Basketball Refering for Polytechnic', 
+                issuer: 'MIT WPU Polytechnic',
+                path: 'certificates/mit_interdepts_refering.jpg'
+            },
+
+            { 
+                name: 'Self Defence Training Certificate (Army Training)', 
+                issuer: 'Dhruv Defence Academy',
+                path: 'certificates/self_defence_training.jpg'
+            },
+
+            { 
+                name: 'Basketball Nationals represnting the School and State in Mumbai', 
+                issuer: 'Dav School',
+                path: 'certificates/basketball_national.jpg'
+            }
+        ];
+
+        // --- DYNAMIC CONTENT RENDERING ---
+        function readMore(index) {
+            const dots = document.getElementById(`dots-${index}`);
+            const moreText = document.getElementById(`more-${index}`);
+            const btnText = document.getElementById(`read-more-btn-${index}`);
+
+            if (dots.style.display === "none") {
+                dots.style.display = "inline";
+                btnText.innerHTML = "Read more";
+                moreText.style.display = "none";
+            } else {
+                dots.style.display = "none";
+                btnText.innerHTML = "Read less";
+                moreText.style.display = "inline";
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set resume link
+            document.getElementById('resume-download-link').href = resumePath;
+
+            // Render Skills
+            const skillsContainer = document.getElementById('skills-container');
+            skills.forEach(skill => {
+                const skillElement = document.createElement('div');
+                skillElement.className = 'glass-effect p-6 rounded-xl flex flex-col items-center justify-center transition duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-indigo-500/20';
+                skillElement.innerHTML = `
+                    <i class="${skill.icon} text-5xl text-indigo-400"></i>
+                    <p class="mt-4 font-semibold text-center">${skill.name}</p>
+                `;
+                skillsContainer.appendChild(skillElement);
+            });
+
+            // Render Projects
+            const featuredProjectsContainer = document.getElementById('featured-projects-container');
+            const projectsContainer = document.getElementById('projects-container');
+            const viewAllProjectsBtn = document.getElementById('view-all-projects-btn');
+            const minimizeProjectsBtn = document.getElementById('minimize-projects-btn');
+            
+            const featuredProjects = projects.filter(p => p.featured);
+            const otherProjects = projects.filter(p => !p.featured);
+
+            function createProjectElement(project, index) {
+                const projectElement = document.createElement('div');
+                projectElement.className = 'glass-effect rounded-xl overflow-hidden flex flex-col transition duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/20';
+                
+                let tagsHTML = project.stack.map(tag => `<span class="bg-gray-700 text-indigo-300 text-xs font-semibold mr-2 px-2.5 py-0.5 rounded-full">${tag}</span>`).join('');
+
+                const shortDescLength = 100;
+                let descriptionHTML;
+                if (project.description.length > shortDescLength) {
+                    const shortDesc = project.description.substring(0, shortDescLength);
+                    const longDesc = project.description.substring(shortDescLength);
+                    descriptionHTML = `
+                        <p class="text-gray-400 mb-4">
+                            ${shortDesc}<span id="dots-${index}">...</span><span id="more-${index}" class="hidden">${longDesc}</span>
+                            <button onclick="readMore(${index})" id="read-more-btn-${index}" class="text-indigo-400 hover:underline focus:outline-none">Read more</button>
+                        </p>
+                    `;
+                } else {
+                    descriptionHTML = `<p class="text-gray-400 mb-4">${project.description}</p>`;
+                }
+
+                projectElement.innerHTML = `
+                    <div class="p-6 flex-grow">
+                        <h3 class="text-2xl font-bold text-white mb-2">${project.title}</h3>
+                        ${descriptionHTML}
+                        <div class="flex flex-wrap items-center">${tagsHTML}</div>
+                    </div>
+                    <div class="p-6 bg-gray-900/50 flex justify-end space-x-4">
+                        <a href="${project.liveLink}" target="_blank" class="text-gray-400 hover:text-indigo-400 transition duration-300 text-xl"><i class="fas fa-external-link-alt"></i></a>
+                    </div>
+                `;
+                return projectElement;
+            }
+
+            featuredProjects.forEach((project, index) => {
+                featuredProjectsContainer.appendChild(createProjectElement(project, index));
+            });
+
+            otherProjects.forEach((project, index) => {
+                const projectElement = createProjectElement(project, featuredProjects.length + index);
+                projectsContainer.appendChild(projectElement);
+            });
+
+            viewAllProjectsBtn.addEventListener('click', () => {
+                projectsContainer.style.display = 'grid';
+                projectsContainer.classList.add('mt-8');
+
+                const projectElements = Array.from(projectsContainer.children);
+                const totalProjects = projectElements.length;
+
+                projectElements.forEach((project, index) => {
+                    setTimeout(() => {
+                        project.style.display = 'flex';
+                        if (totalProjects % 2 !== 0 && index === totalProjects - 1) {
+                            project.classList.add('slide-in-from-bottom');
+                        } else if (index % 2 === 0) {
+                            project.classList.add('slide-in-from-left');
+                        } else {
+                            project.classList.add('slide-in-from-right');
+                        }
+                    }, index * 200);
+                });
+
+                viewAllProjectsBtn.classList.add('hidden');
+                minimizeProjectsBtn.classList.remove('hidden');
+            });
+
+            minimizeProjectsBtn.addEventListener('click', () => {
+                projectsContainer.style.display = 'none';
+                projectsContainer.classList.remove('mt-8');
+
+                const projectElements = Array.from(projectsContainer.children);
+                projectElements.forEach(project => {
+                    project.classList.remove('slide-in-from-left', 'slide-in-from-right', 'slide-in-from-bottom');
+                });
+
+                minimizeProjectsBtn.classList.add('hidden');
+                viewAllProjectsBtn.classList.remove('hidden');
+                document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+            });
+
+            // Render Certificates
+            const featuredCertificatesContainer = document.getElementById('featured-certificates-container');
+            const otherCertificatesContainer = document.getElementById('other-certificates-container');
+            const viewAllCertificatesBtn = document.getElementById('view-all-certificates-btn');
+            const minimizeCertificatesBtn = document.getElementById('minimize-certificates-btn');
+            const modal = document.getElementById('certificate-modal');
+            const modalImage = document.getElementById('modal-image');
+            const modalCloseButton = document.getElementById('modal-close-button');
+
+            const featuredCertificates = certificates.filter(c => c.featured);
+            const otherCertificates = certificates.filter(c => !c.featured);
+
+            function createCertificateElement(cert) {
+                const certElement = document.createElement('div');
+                certElement.className = 'glass-effect p-6 rounded-xl flex flex-col items-center justify-center transition duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-indigo-500/20 cursor-pointer';
+                certElement.innerHTML = `
+                    <img src="${cert.path}" alt="${cert.name}" class="cert-preview w-full">
+                    <p class="mt-4 font-semibold text-center">${cert.name}</p>
+                    <p class="text-sm text-gray-400">${cert.issuer}</p>
+                `;
+                certElement.addEventListener('click', () => {
+                    modalImage.src = cert.path;
+                    modal.classList.remove('hidden');
+                });
+                return certElement;
+            }
+
+            featuredCertificates.forEach(cert => {
+                featuredCertificatesContainer.appendChild(createCertificateElement(cert));
+            });
+
+            otherCertificates.forEach(cert => {
+                const certElement = createCertificateElement(cert);
+                otherCertificatesContainer.appendChild(certElement);
+            });
+            
+            viewAllCertificatesBtn.addEventListener('click', () => {
+                otherCertificatesContainer.style.display = 'grid';
+                otherCertificatesContainer.classList.add('mt-8');
+
+                const certElements = Array.from(otherCertificatesContainer.children);
+                const totalCerts = certElements.length;
+
+                certElements.forEach((cert, index) => {
+                    setTimeout(() => {
+                        cert.style.display = 'flex';
+                        if (totalCerts % 2 !== 0 && index === totalCerts - 1) {
+                            cert.classList.add('slide-in-from-bottom');
+                        } else if (index % 2 === 0) {
+                            cert.classList.add('slide-in-from-left');
+                        } else {
+                            cert.classList.add('slide-in-from-right');
+                        }
+                    }, index * 200);
+                });
+
+                viewAllCertificatesBtn.classList.add('hidden');
+                minimizeCertificatesBtn.classList.remove('hidden');
+            });
+
+            minimizeCertificatesBtn.addEventListener('click', () => {
+                otherCertificatesContainer.style.display = 'none';
+                otherCertificatesContainer.classList.remove('mt-8');
+
+                const certElements = Array.from(otherCertificatesContainer.children);
+                certElements.forEach(cert => {
+                    cert.classList.remove('slide-in-from-left', 'slide-in-from-right', 'slide-in-from-bottom');
+                });
+
+                minimizeCertificatesBtn.classList.add('hidden');
+                viewAllCertificatesBtn.classList.remove('hidden');
+                document.getElementById('certificates').scrollIntoView({ behavior: 'smooth' });
+            });
+
+
+            modalCloseButton.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+
+            // Typing Effect
+            const typingElement = document.getElementById('typing-effect');
+            const roles = ["AI & Data Science Student", "Full Stack Developer", "National Basketball Player"];
+            let roleIndex = 0;
+            let charIndex = 0;
+            let isDeleting = false;
+
+            function type() {
+                const currentRole = roles[roleIndex];
+                if (isDeleting) {
+                    typingElement.textContent = currentRole.substring(0, charIndex--);
+                } else {
+                    typingElement.textContent = currentRole.substring(0, charIndex++);
+                }
+
+                if (!isDeleting && charIndex === currentRole.length + 1) {
+                    isDeleting = true;
+                    setTimeout(type, 2000);
+                } else if (isDeleting && charIndex === -1) {
+                    isDeleting = false;
+                    roleIndex = (roleIndex + 1) % roles.length;
+                    setTimeout(type, 500);
+                } else {
+                    setTimeout(type, isDeleting ? 50 : 150);
+                }
+            }
+            type();
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        });
+
+    </script>
+</body>
+</html>
