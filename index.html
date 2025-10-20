@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ansh Thakare | AI & Data Science</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0a0a0a;
+        }
+        .bg-grid {
+            background-image:
+                linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        .glass-effect {
+            background: rgba(17, 24, 39, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .typing-cursor {
+            border-right: 2px solid #6366f1; /* Indigo color */
+            animation: blink 0.7s steps(1) infinite;
+        }
+        .cert-preview {
+            filter: blur(5px);
+            -webkit-filter: blur(5px);
+            height: 150px;
+            object-fit: cover;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+        .fade-in {
+            animation: fade-in 0.5s ease-in-out forwards;
+        }
+        @keyframes fade-in {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* =================== UPDATED CSS FOR "ABOUT" SECTION =================== */
+        #dynamic-about-content {
+            overflow: hidden; /* Hides the content until height expands */
+            height: 0;       /* Starts with zero height, taking up no space */
+            transition: height 350ms ease-in-out; /* Smoothly animates the height */
+        }
+        .about-button.active {
+            background-color: #4338ca; /* A darker indigo for active state */
+            box-shadow: 0 0 0 2px #818cf8; /* Ring effect */
+        }
+        /* ======================================================================= */
+    </style>
+</head>
+<body class="text-gray-200 bg-gray-900">
+
+    <div class="fixed inset-0 z-[-1] bg-gradient-to-br from-gray-900 via-black to-gray-800 bg-grid"></div>
+
+    <header class="fixed top-0 left-0 right-0 z-50 glass-effect">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-white">AT<span class="text-indigo-400">.</span></a>
+            <div class="hidden md:flex space-x-8 items-center">
+                <a href="#about" class="hover:text-indigo-400 transition duration-300">About</a>
+                <a href="#skills" class="hover:text-indigo-400 transition duration-300">Skills</a>
+                <a href="#projects" class="hover:text-indigo-400 transition duration-300">Projects</a>
+                <a href="#certificates" class="hover:text-indigo-400 transition duration-300">Certificates</a>
+                <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg transition duration-300">Contact</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4">
+            <a href="#about" class="block py-2 hover:text-indigo-400 transition duration-300">About</a>
+            <a href="#skills" class="block py-2 hover:text-indigo-400 transition duration-300">Skills</a>
+            <a href="#projects" class="block py-2 hover:text-indigo-400 transition duration-300">Projects</a>
+            <a href="#certificates" class="block py-2 hover:text-indigo-400 transition duration-300">Certificates</a>
+            <a href="#contact" class="block mt-2 bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-4 rounded-lg text-center transition duration-300">Contact</a>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6">
+
+        <section id="home" class="min-h-screen flex flex-col-reverse md:flex-row items-center justify-center pt-24 md:pt-0">
+            <div class="md:w-1/2 text-center md:text-left">
+                <h1 class="text-4xl md:text-6xl font-bold text-white leading-tight">
+                    Ansh Thakare
+                </h1>
+                <h2 class="text-2xl md:text-3xl text-indigo-400 mt-2">
+                    <span id="typing-effect"></span><span class="typing-cursor"></span>
+                </h2>
+                <p class="mt-4 text-lg text-gray-400 max-w-xl">
+                    Aspiring AI and Data Science professional with a passion for building innovative solutions and a proven track record of discipline from competitive sports.
+                </p>
+                <div class="mt-8 flex justify-center md:justify-start space-x-6 text-3xl">
+                    <a href="https://www.linkedin.com/in/ansh-thakare-053783359" target="_blank" class="text-gray-400 hover:text-indigo-400 transition duration-300"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://www.instagram.com/ash.thakare_22" target="_blank" class="text-gray-400 hover:text-indigo-400 transition duration-300"><i class="fab fa-instagram"></i></a>
+                </div>
+                 <div class="mt-8 flex justify-center md:justify-start space-x-4">
+                    <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">Get in Touch</a>
+                    <a href="./assets/Ansh_Thakare_Resume.pdf" id="resume-download-link" download class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-3 px-6 rounded-lg transition duration-300">Download Resume</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center p-8">
+                <img src="ansh_pfp.jpg" alt="Ansh Thakare" class="w-64 h-64 md:w-80 md:h-80 rounded-full object-cover border-4 border-indigo-500 shadow-2xl shadow-indigo-500/20">
+            </div>
+        </section>
+        
+        <section id="about" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-12">My Journey</h2>
+            <div class="glass-effect p-6 md:p-8 rounded-xl max-w-4xl mx-auto">
+                
+                <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 pb-8 border-b border-gray-700">
+                    <div class="md:w-2/3 text-center md:text-left">
+                        <h3 class="text-2xl font-semibold text-indigo-400 mb-4">Who I Am</h3>
+                        <p class="text-gray-300 mb-4">
+                            I am a dedicated student at MIT World Peace University, pursuing a career in Artificial Intelligence and Data Science. My academic journey is driven by a fascination for how data can be transformed into intelligent action and meaningful insights.
+                        </p>
+                        <p class="text-gray-300">
+                            Beyond the classroom, I am a passionate creator, constantly engaged in building projects that challenge me and expand my skill set. My background as a national-level basketball player has instilled in me a deep sense of discipline, teamwork, and a relentless drive to succeed—qualities I bring to every technical endeavor.
+                        </p>
+                    </div>
+                    <div class="md:w-1/3 text-center">
+                        <i class="fas fa-basketball-ball text-7xl md:text-9xl text-indigo-500/50"></i>
+                        <p class="mt-4 text-lg font-semibold">National Level Athlete</p>
+                        <p class="text-sm text-gray-400">Discipline & Teamwork</p>
+                    </div>
+                </div>
+
+                <div class="flex justify-center gap-4 my-8">
+                    <button id="education-btn" class="about-button bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-5 rounded-lg transition duration-300">
+                        Education
+                    </button>
+                    <button id="interest-btn" class="about-button bg-indigo-600 hover:bg-indigo-700 text-white font-medium py-2 px-5 rounded-lg transition duration-300">
+                        My Interest in AI
+                    </button>
+                </div>
+
+                <div id="dynamic-about-content">
+                    </div>
+
+            </div>
+        </section>
+
+
+        <section id="skills" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-12">My Tech Stack</h2>
+            <div id="skills-container" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                </div>
+        </section>
+
+        <section id="projects" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-12">Featured Projects</h2>
+            <div id="projects-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+            <div class="text-center mt-12 space-x-4">
+                <button id="view-more-projects-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">View More</button>
+                <button id="view-less-projects-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 hidden">View Less</button>
+            </div>
+        </section>
+
+        <section id="certificates" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-12">Achievements & Certifications</h2>
+            <div id="certificates-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                </div>
+            <div class="text-center mt-12 space-x-4">
+                <button id="view-more-certificates-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">View More</button>
+                <button id="view-less-certificates-btn" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300 hidden">View Less</button>
+            </div>
+        </section>
+
+        <div id="certificate-modal" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 hidden">
+            <div class="relative max-w-4xl max-h-full p-4">
+                <button id="modal-close-button" class="absolute top-4 right-4 text-white text-3xl font-bold">&times;</button>
+                <img id="modal-image" src="" alt="Certificate" class="w-full h-auto rounded-lg">
+            </div>
+        </div>
+
+        <section id="contact" class="py-20">
+            <h2 class="text-4xl font-bold text-center mb-12">Let's Connect</h2>
+            <div class="glass-effect max-w-4xl mx-auto p-8 rounded-xl">
+                <p class="text-center text-gray-300 mb-8">
+                    Have a project in mind, a question, or just want to say hi? Feel free to reach out. I'm always open to discussing new ideas and opportunities.
+                </p>
+                <div class="flex flex-col md:flex-row justify-center items-center gap-6">
+                     <a href="mailto:thakareansh3@gmail.com" class="w-full md:w-auto flex items-center justify-center gap-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                         <i class="fas fa-envelope"></i> Send an Email
+                     </a>
+                     <a href="https://wa.me/919226139414" target="_blank" class="w-full md:w-auto flex items-center justify-center gap-3 bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                         <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                     </a>
+                </div>
+                <div class="text-center mt-8 text-gray-400">
+                    <p>Email: <a href="mailto:thakareansh3@gmail.com" class="text-indigo-400">thakareansh3@gmail.com</a></p>
+                    <p>Phone: +91 9226139414</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="text-center py-6 border-t border-gray-800">
+        <p class="text-gray-500">&copy; 2025 Ansh Thakare. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // =====================================================================
+            // =================== UPDATED SCRIPT FOR "ABOUT" SECTION ================
+            // =====================================================================
+            const aboutContentData = {
+                education: {
+                    title: 'Education',
+                    description1: "My foundational years were spent at <strong>D.A.V. Public School, Aundh, Pune.</strong> This is where my academic and personal growth began, and I'm proud to have been a part of the institution from Junior KG all the way to my 10th standard.",
+                    description2: "The school provided a strong base not only in academics but also in extracurricular activities, which played a huge role in shaping who I am today.",
+                    iconClass: 'fas fa-graduation-cap',
+                    iconText: 'D.A.V. Public School',
+                    iconSubtext: 'Jr. KG to 10th Standard'
+                },
+                interest: {
+                    title: 'My Interest in AI',
+                    description1: "My journey into technology wasn't by chance. At my school, D.A.V. Public School, we had the unique opportunity to study Artificial Intelligence as a subject right from the 8th standard.",
+                    description2: "This early exposure sparked a genuine passion. I was fascinated by how we could teach machines to learn and make decisions. What started as a school subject gradually grew into a deep-seated interest, leading me to pursue it as my career.",
+                    iconClass: 'fas fa-lightbulb',
+                    iconText: 'Early Spark',
+                    iconSubtext: 'Passion for Innovation'
+                }
+            };
+
+            const dynamicContentContainer = document.getElementById('dynamic-about-content');
+            const educationBtn = document.getElementById('education-btn');
+            const interestBtn = document.getElementById('interest-btn');
+            const aboutButtons = document.querySelectorAll('.about-button');
+
+            function updateAboutContent(contentKey) {
+                const clickedButton = document.getElementById(`${contentKey}-btn`);
+                const data = aboutContentData[contentKey];
+
+                // If the clicked button is already active, hide the content and deactivate it
+                if (clickedButton.classList.contains('active')) {
+                    dynamicContentContainer.style.height = '0px';
+                    clickedButton.classList.remove('active');
+                    return;
+                }
+
+                // Deactivate all buttons before activating the new one
+                aboutButtons.forEach(btn => btn.classList.remove('active'));
+                clickedButton.classList.add('active');
+
+                // Temporarily add content to measure its height
+                dynamicContentContainer.innerHTML = `
+                    <div class="flex flex-col md:flex-row items-center gap-6 md:gap-12 pt-4"> <div class="md:w-2/3 text-center md:text-left">
+                            <h3 class="text-2xl font-semibold text-indigo-400 mb-4">${data.title}</h3>
+                            <p class="text-gray-300 mb-4">${data.description1}</p>
+                            <p class="text-gray-300">${data.description2}</p>
+                        </div>
+                        <div class="md:w-1/3 text-center">
+                            <i class="${data.iconClass} text-7xl md:text-9xl text-indigo-500/50"></i>
+                            <p class="mt-4 text-lg font-semibold">${data.iconText}</p>
+                            <p class="text-sm text-gray-400">${data.iconSubtext}</p>
+                        </div>
+                    </div>
+                `;
+                
+                // Get the height of the content and set the container's height to trigger the animation
+                const contentHeight = dynamicContentContainer.scrollHeight;
+                dynamicContentContainer.style.height = contentHeight + 'px';
+            }
+
+            educationBtn.addEventListener('click', () => updateAboutContent('education'));
+            interestBtn.addEventListener('click', () => updateAboutContent('interest'));
+            // =====================================================================
+            // ============ END OF UPDATED SCRIPT FOR "ABOUT" SECTION ============
+            // =====================================================================
+
+
+            // --- DATA CONFIGURATION ---
+            const resumePath = 'Ansh_resume.pdf'; 
+
+            const skills = [
+                { name: 'Python', icon: 'fab fa-python' },
+                { name: 'Java', icon: 'fab fa-java' },
+                { name: 'JavaScript', icon: 'fab fa-js-square' },
+                { name: 'HTML5', icon: 'fab fa-html5' },
+                { name: 'CSS3', icon: 'fab fa-css3-alt' },
+                { name: 'SQL', icon: 'fas fa-database' },
+                { name: 'Node.js', icon: 'fab fa-node-js' },
+            ];
+
+            const projects = [
+                {
+                    title: 'Capstone Final Year Project for Polytechnic MIT WPU',
+                    description: 'A full-stack web application to automate the capstone project registration process, featuring multi-role dashboards and an AI-powered idea similarity checker.',
+                    stack: ['JavaScript', 'HTML', 'CSS', 'Node.js', 'Supabase'],
+                    liveLink: 'https://mitcapstoneregistration.netlify.app/'
+                },
+                {
+                    title: 'SIH 2025 Problem statement 1 - FANET based Drone Communication',
+                    description: 'A FANET-based communication platform for drones, enabling real-time data exchange and coordination in swarm operations.',
+                    stack: ['Python', 'FANET', 'AI', 'ML'],
+                    liveLink: 'https://neuromesh.onrender.com/'
+                },
+                {
+                    title: 'SIH 2025 problem statement 2- Block Chain Based Blue Carbon Registry',
+                    description: 'A blockchain-based system for tracking and verifying blue carbon credits, ensuring transparency in carbon offset projects.',
+                    stack: ['Blockchain', 'Type Script', 'ML'],
+                    liveLink: 'https://sih2k25.netlify.app/'
+                },
+                {
+                    title: 'Student Attendance Tracker',
+                    description: 'A web application for teachers to mark student attendance. The app allows teachers to create classes, add students, and mark attendance.',
+                    stack: ['Python', 'Streamlit', 'SQL','Supabase'],
+                    liveLink: 'https://attendancestraker.onrender.com'
+                },
+                {
+                    title: 'Helmet Based Accident Detection System',
+                    description: 'A helmet equipped with sensors to detect accidents and hazardous conditions, sending real-time alerts to emergency contacts.',
+                    stack: ['Html'],
+                    liveLink: 'https://neuroguard.netlify.app/'
+                },
+                {
+                    title: 'English to SQL Converter using NLP',
+                    description: 'A web application that leverages Natural Language Processing (NLP) to translate user-inputted English queries into SQL commands.',
+                    stack: ['Python', 'NLP','SQL'],
+                    liveLink: 'https://english-to-sql-pbl2.onrender.com'
+                }
+            ];
+
+            const certificates = [
+                { 
+                    name: 'Power BI for Beginners', 
+                    issuer: 'Microsoft & Simplilearn',
+                    path: 'POWER_BI.png'
+                },
+                { 
+                    name: 'SIH 2025 Internal Hackathon', 
+                    issuer: 'MIT-WPU',
+                    path: 'SIH_2k25.jpg'
+                },
+                { 
+                    name: 'Social Media Internship', 
+                    issuer: 'People Conexxions',
+                    path: 'Ansh_internship.png'
+                },
+                { 
+                    name: 'SIH 2023 Internal Nomination', 
+                    issuer: 'MIT-WPU',
+                    path: 'Ansh_sih_2023.png' 
+                },
+                { 
+                    name: 'Basketball Committee Member', 
+                    issuer: 'MIT-WPU Polytechnic',
+                    path: 'commite_basketball.jpg'
+                },
+                { 
+                    name: 'FLAME Football Champions League', 
+                    issuer: 'FLAME University',
+                    path: 'flames_basketball_win.jpg'
+                },
+                { 
+                    name: 'Inter-Department Basketball Runner Up', 
+                    issuer: 'MIT-WPU Polytechnic',
+                    path: 'Inter_depts_runnerUp.jpg'
+                },
+                { 
+                    name: 'Reliance Foundation Jr. NBA', 
+                    issuer: 'Jr. NBA',
+                    path: 'junior_nba.jpg'
+                },
+                { 
+                    name: 'Inter-Department Basketball Referee', 
+                    issuer: 'MIT-WPU Polytechnic',
+                    path: 'mit_interdepts_refering.jpg'
+                },
+                { 
+                    name: 'Commando Training Program', 
+                    issuer: 'Dhruv Defence Motivation Center',
+                    path: 'self_defence_training.jpg'
+                },
+                { 
+                    name: 'DAV National Sports', 
+                    issuer: 'DAV College Managing Committee',
+                    path: 'basketball_national.jpg'
+                }
+            ];
+
+            // --- DYNAMIC CONTENT RENDERING ---
+            document.getElementById('resume-download-link').href = resumePath;
+
+            const skillsContainer = document.getElementById('skills-container');
+            skills.forEach(skill => {
+                const skillElement = document.createElement('div');
+                skillElement.className = 'glass-effect p-6 rounded-xl flex flex-col items-center justify-center transition duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-indigo-500/20';
+                skillElement.innerHTML = `<i class="${skill.icon} text-5xl text-indigo-400"></i><p class="mt-4 font-semibold text-center">${skill.name}</p>`;
+                skillsContainer.appendChild(skillElement);
+            });
+
+            function setupToggleContent(containerId, viewMoreBtnId, viewLessBtnId, items, createItemElement, initialCount) {
+                const container = document.getElementById(containerId);
+                const viewMoreBtn = document.getElementById(viewMoreBtnId);
+                const viewLessBtn = document.getElementById(viewLessBtnId);
+                const section = container.closest('section');
+
+                container.innerHTML = '';
+                for (let i = 0; i < initialCount && i < items.length; i++) {
+                    container.appendChild(createItemElement(items[i], i));
+                }
+                
+                if (items.length <= initialCount) {
+                    viewMoreBtn.classList.add('hidden');
+                }
+
+                viewMoreBtn.addEventListener('click', () => {
+                    for (let i = initialCount; i < items.length; i++) {
+                        const itemElement = createItemElement(items[i], i);
+                        itemElement.classList.add('fade-in');
+                        container.appendChild(itemElement);
+                    }
+                    viewLessBtn.classList.remove('hidden');
+                    viewMoreBtn.classList.add('hidden');
+                });
+
+                viewLessBtn.addEventListener('click', () => {
+                    while (container.children.length > initialCount) {
+                        container.removeChild(container.lastChild);
+                    }
+                    viewLessBtn.classList.add('hidden');
+                    viewMoreBtn.classList.remove('hidden');
+                    section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                });
+            }
+
+            function createProjectElement(project) {
+                const projectElement = document.createElement('div');
+                projectElement.className = 'glass-effect rounded-xl overflow-hidden flex flex-col transition duration-300 hover:transform hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/20';
+                let tagsHTML = project.stack.map(tag => `<span class="bg-gray-700 text-indigo-300 text-xs font-semibold mr-2 mb-2 px-2.5 py-0.5 rounded-full">${tag}</span>`).join('');
+                projectElement.innerHTML = `
+                    <div class="p-6 flex-grow flex flex-col">
+                        <h3 class="text-2xl font-bold text-white mb-2">${project.title}</h3>
+                        <p class="text-gray-400 mb-4 flex-grow">${project.description}</p>
+                        <div class="flex flex-wrap items-center mt-auto">${tagsHTML}</div>
+                    </div>
+                    <div class="p-6 bg-gray-900/50 flex justify-end space-x-4">
+                        <a href="${project.liveLink}" target="_blank" class="text-gray-400 hover:text-indigo-400 transition duration-300 text-xl"><i class="fas fa-external-link-alt"></i></a>
+                    </div>`;
+                return projectElement;
+            }
+
+            function createCertificateElement(cert) {
+                const certElement = document.createElement('div');
+                certElement.className = 'glass-effect p-6 rounded-xl flex flex-col items-center justify-center transition duration-300 hover:-translate-y-2 hover:shadow-xl hover:shadow-indigo-500/20 cursor-pointer';
+                certElement.innerHTML = `
+                    <img src="${cert.path}" alt="${cert.name}" class="cert-preview w-full">
+                    <p class="mt-4 font-semibold text-center">${cert.name}</p>
+                    <p class="text-sm text-gray-400">${cert.issuer}</p>`;
+                certElement.addEventListener('click', () => {
+                    document.getElementById('modal-image').src = cert.path;
+                    document.getElementById('certificate-modal').classList.remove('hidden');
+                });
+                return certElement;
+            }
+            
+            setupToggleContent('projects-container', 'view-more-projects-btn', 'view-less-projects-btn', projects, createProjectElement, 3);
+            setupToggleContent('certificates-container', 'view-more-certificates-btn', 'view-less-certificates-btn', certificates, createCertificateElement, 3);
+
+            const modal = document.getElementById('certificate-modal');
+            document.getElementById('modal-close-button').addEventListener('click', () => modal.classList.add('hidden'));
+            modal.addEventListener('click', (e) => e.target === modal && modal.classList.add('hidden'));
+
+            const typingElement = document.getElementById('typing-effect');
+            const roles = ["AI & Data Science Student", "Full Stack Developer", "National Basketball Player"];
+            let roleIndex = 0, charIndex = 0, isDeleting = false;
+            function type() {
+                const currentRole = roles[roleIndex];
+                if (isDeleting) typingElement.textContent = currentRole.substring(0, charIndex--);
+                else typingElement.textContent = currentRole.substring(0, charIndex++);
+                if (!isDeleting && charIndex === currentRole.length + 1) { isDeleting = true; setTimeout(type, 2000); } 
+                else if (isDeleting && charIndex === -1) { isDeleting = false; roleIndex = (roleIndex + 1) % roles.length; setTimeout(type, 500); } 
+                else { setTimeout(type, isDeleting ? 50 : 150); }
+            }
+            type();
+
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        });
+    </script>
+</body>
+</html>
