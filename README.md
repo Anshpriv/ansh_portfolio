@@ -97,11 +97,6 @@ Clean UI, modern layout, and smooth animations designed to create strong visual 
 
 ---
 
-## 📬 Contact
-
-Feel free to reach out for collaboration or questions.
-
----
 
 ## ⭐ Support
 
