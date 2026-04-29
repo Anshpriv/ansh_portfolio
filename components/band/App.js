@@ -1,7 +1,7 @@
 'use client';
 
 import * as THREE from 'three';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
 import { Canvas, extend, useThree, useFrame } from '@react-three/fiber';
 import { useGLTF, useTexture, Environment, Lightformer } from '@react-three/drei';
 import { BallCollider, CuboidCollider, Physics, RigidBody, useRopeJoint, useSphericalJoint } from '@react-three/rapier';
@@ -13,7 +13,8 @@ extend({ MeshLineGeometry, MeshLineMaterial });
 // Path lokal
 const GLTF_PATH = '/assets/card.glb';
 const TEXTURE_PATH = '/assets/band.png';
-const IMAGE_PATH = '/assets/port.png';
+const IMAGE_PATH = '/ansh/ansh_pfp.jpg';
+const PFP_PATH = '/ansh/ansh_pfp.jpg';
 
 useGLTF.preload(GLTF_PATH);
 useTexture.preload(TEXTURE_PATH);
@@ -43,26 +44,47 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
   const vec = new THREE.Vector3(), ang = new THREE.Vector3(), rot = new THREE.Vector3(), dir = new THREE.Vector3();
   const segmentProps = { type: 'dynamic', canSleep: true, colliders: false, angularDamping: 4, linearDamping: 4 };
   const { nodes, materials } = useGLTF(GLTF_PATH);
-  const texture = useTexture(TEXTURE_PATH);
+  // Canvas-generated band texture with ANSH THAKARE text
+  const texture = useMemo(() => {
+    const canvas = document.createElement('canvas');
+    canvas.width = 512;
+    canvas.height = 64;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#1a1a2e';
+    ctx.fillRect(0, 0, 512, 64);
+    ctx.fillStyle = '#e0e0ff';
+    ctx.font = 'bold 22px Arial, sans-serif';
+    ctx.letterSpacing = '4px';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('ANSH THAKARE', 256, 32);
+    const t = new THREE.CanvasTexture(canvas);
+    t.wrapS = THREE.RepeatWrapping;
+    t.repeat.set(3, 1);
+    return t;
+  }, []);
+  const pfpTexture = useTexture(PFP_PATH);
+  // Show the full photo as-is, face is centered in the image
+
   const { width, height } = useThree((state) => state.size);
   const [curve] = useState(() => new THREE.CatmullRomCurve3([new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3(), new THREE.Vector3()]));
   const [dragged, drag] = useState(false);
   const [hovered, hover] = useState(false);
-  
+
   // Deteksi mobile berdasarkan lebar layar
   const isMobile = width < 768;
-  
+
   // Posisi responsif untuk card - DIPERBAIKI SINTAKS
   const cardPosition = isMobile ? [4, 5, 0] : [3, 4, 0];
   const initialJointPositions = isMobile ? [
-    [0.3, 0, 0], 
-    [0.6, 0, 0], 
-    [0.9, 0, 0], 
+    [0.3, 0, 0],
+    [0.6, 0, 0],
+    [0.9, 0, 0],
     [1.2, 0, 0]
   ] : [
-    [3.5, 0, 0], 
-    [4, 0, 0], 
-    [4.5, 0, 0], 
+    [3.5, 0, 0],
+    [4, 0, 0],
+    [4.5, 0, 0],
     [5, 0, 0]
   ];
 
@@ -73,10 +95,11 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
 
   useEffect(() => {
     if (typeof window !== "undefined") {
-    if (hovered) {
-      document.body.style.cursor = dragged ? 'grabbing' : 'grab';
-      return () => void (document.body.style.cursor = 'auto');
-    }}
+      if (hovered) {
+        document.body.style.cursor = dragged ? 'grabbing' : 'grab';
+        return () => void (document.body.style.cursor = 'auto');
+      }
+    }
   }, [hovered, dragged]);
 
   useFrame((state, delta) => {
@@ -123,14 +146,27 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
         <RigidBody position={initialJointPositions[3]} ref={card} {...segmentProps} type={dragged ? 'kinematicPosition' : 'dynamic'}>
           <CuboidCollider args={[0.8, 1.125, 0.01]} />
           <group
-            scale={isMobile ? 1.5 : 2.25}
+            scale={isMobile ? 0.7 : 0.9}
             position={[0, -1.2, -0.05]}
             onPointerOver={() => hover(true)}
             onPointerOut={() => hover(false)}
             onPointerUp={(e) => (e.target.releasePointerCapture(e.pointerId), drag(false))}
             onPointerDown={(e) => (e.target.setPointerCapture(e.pointerId), drag(new THREE.Vector3().copy(e.point).sub(vec.copy(card.current.translation()))))}>
+            {/* White card base - no Dexter Morgan */}
             <mesh geometry={nodes.card.geometry}>
-              <meshPhysicalMaterial map={materials.base.map} map-anisotropy={16} clearcoat={1} clearcoatRoughness={0.15} roughness={0.3} metalness={0.5} />
+              <meshPhysicalMaterial
+                color="#f5f5f5"
+                clearcoat={1}
+                clearcoatRoughness={0.15}
+                roughness={0.3}
+                metalness={0.15}
+                side={THREE.DoubleSide}
+              />
+            </mesh>
+            {/* Photo plane - moved up within the card */}
+            <mesh position={[0, 1.3, 0.015]} renderOrder={10}>
+              <planeGeometry args={[1.55, 2.2]} />
+              <meshBasicMaterial map={pfpTexture} side={THREE.DoubleSide} depthTest={false} />
             </mesh>
             <mesh geometry={nodes.clip.geometry} material={materials.metal} material-roughness={0.3} />
             <mesh geometry={nodes.clamp.geometry} material={materials.metal} />
@@ -141,14 +177,7 @@ function Band({ maxSpeed = 50, minSpeed = 10 }) {
         <meshLineGeometry />
         <meshLineMaterial color="white" depthTest={false} resolution={[width, height]} useMap map={texture} repeat={[-3, 1]} lineWidth={1} />
       </mesh>
-      
-      {/* Image portofolio - hanya tampil di desktop */}
-      {!isMobile && (
-        <Image url={IMAGE_PATH} position={[0, 0, -2]} scale={[10, 1, 2]} />
-      )}
-      {isMobile && (
-        <Image url={IMAGE_PATH} position={[0, 0, -25]} scale={[10, 1, 2]} />
-      )}
+
     </>
   );
 }

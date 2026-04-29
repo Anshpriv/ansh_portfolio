@@ -2,13 +2,17 @@ import type { Metadata } from "next";
 
 export const links = {
   sourceCode: "",
-  ownerName: "Dexter Morgan",
-  ownerEmail: "",
+  ownerName: "Ansh Thakare",
+  ownerEmail: "thakareansh3@gmail.com",
+  linkedin: "https://www.linkedin.com/in/ansh-thakare-053783359",
+  instagram: "https://www.instagram.com/ash.thakare_22",
+  whatsapp: "https://wa.me/919226139414",
+  resume: "/ansh/Ansh_Thakare_Resume.pdf",
 } as const;
 
 export const siteConfig: Metadata = {
-  title: `${links.ownerName}' Portfolio`,
-  description: "Portfolio.",
+  title: "Ansh Thakare | AI & Data Science",
+  description: "Aspiring AI and Data Science professional with a passion for building innovative solutions and a proven track record of discipline from competitive sports.",
   keywords: [
     "reactjs",
     "nextjs",

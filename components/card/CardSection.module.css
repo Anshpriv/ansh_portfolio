@@ -43,6 +43,13 @@
   perspective: 1000px;
 }
 
+@media (max-width: 768px) {
+  .card {
+    width: 200px;
+    height: 300px;
+  }
+}
+
 .card p {
   position: absolute;
   top: 50%;

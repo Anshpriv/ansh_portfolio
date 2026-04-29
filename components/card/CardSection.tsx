@@ -32,7 +32,9 @@ const CardSection: React.FC = () => {
 
       const cards = cardsRef.current;
       const totalScrollHeight = window.innerHeight * 3;
-      const positions = [14, 38, 62, 86];
+      const isMobile = window.innerWidth < 768;
+      const positionsX = isMobile ? [50, 50, 50, 50] : [14, 38, 62, 86];
+      const positionsY = isMobile ? [20, 40, 60, 80] : [50, 50, 50, 50];
       const rotations = [-15, -7.5, 7.5, 15];
 
       // Pin cards section
@@ -47,7 +49,8 @@ const CardSection: React.FC = () => {
       // Spread cards
       cards.forEach((card, index) => {
         gsap.to(card, {
-          left: `${positions[index]}%`,
+          left: `${positionsX[index]}%`,
+          top: `${positionsY[index]}%`,
           rotation: `${rotations[index]}`,
           ease: 'none',
           scrollTrigger: {
@@ -142,29 +145,18 @@ const CardSection: React.FC = () => {
                     alt="Deskripsi Gambar Depan"
                     width={500}
                     height={300}
-                    layout="responsive"
+                    sizes="100vw"
+                    style={{ width: '100%', height: 'auto' }}
                   />
                 </div>
 
                 {/* Back Side */}
                 <div className={styles.flipCardBack}>
-                  {id === 1 || id === 2 ? (
-                    <Image
-                      src={`/images/img${id === 1 ? '15' : '16'}.gif`}
-                      alt="Logo Gambar Belakang"
-                      width={100}
-                      height={100}
-                      className={styles.cardLogo}
-                    />
-                  ) : (
-                    <Image
-                      src={`/images/img${id === 3 ? '17' : '18'}.gif`}
-                      alt="Deskripsi Gambar Penuh"
-                      width={500}
-                      height={300}
-                      className={styles.fullImg}
-                    />
-                  )}
+                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', padding: '1rem', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '0.8em' }}>
+                    <h2 style={{ fontFamily: "'Instrument Serif', serif", fontSize: '3rem', color: '#fff', textAlign: 'center', lineHeight: '1.2', textTransform: 'uppercase', whiteSpace: 'pre-wrap', textShadow: '0 0 10px rgba(255,255,255,0.8), 0 0 20px rgba(255,255,255,0.5), 0 0 30px rgba(255,255,255,0.3), 0 0 50px rgba(255,255,255,0.2)' }}>
+                      {id === 1 ? 'Web\nDevelopment' : id === 2 ? 'App\nDevelopment' : id === 3 ? 'Machine\nLearning' : 'Video\nEditing'}
+                    </h2>
+                  </div>
                 </div>
               </div>
             </div>

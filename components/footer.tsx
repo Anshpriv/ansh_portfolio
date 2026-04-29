@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { FaLocationArrow } from "react-icons/fa6";
+import { FaLocationArrow, FaWhatsapp, FaEnvelope } from "react-icons/fa6";
 
 import { MagicButton } from "@/components/ui/magic-button";
 import { links } from "@/config";
@@ -11,7 +11,7 @@ import { socialMedia } from "@/data";
 export const Footer = () => {
   return (
     <footer id="contact" className="mb-[100px] w-full pb-10 md:mb-auto">
-      <div className="absolute -bottom-72 left-0 min-h-96 w-full">
+      <div className="absolute -bottom-72 left-0 min-h-96 w-full pointer-events-none">
         <Image
           src="/footer-grid.svg"
           alt="grid"
@@ -22,45 +22,40 @@ export const Footer = () => {
       </div>
 
       <div className="flex flex-col items-center">
-        <h1 className="heading lg:max-w-[45vw] font-bold">
-          Ready to take <span className="text-purple">next step </span>
-          for Your business?
+        <h1 className="text-2xl md:text-4xl lg:max-w-[45vw] font-bold text-center">
+          Feel free to contact me if anything&apos;s up! You can text me directly on WhatsApp or drop me an email, so we can discuss it right away.
         </h1>
 
-        <p className="my-5 text-center text-white-200 md:mt-10">
-          Reach out to me today and let&apos;s discuss how I can help your
-          achieve your goals.
-        </p>
-
-        <Link
-          href={`mailto:`}
-          target="_blank"
-          rel="noreferrer noopener"
-          className="md:mt-10"
-        >
-          <MagicButton
-            title="Let's get in touch"
-            icon={<FaLocationArrow />}
-            position="right"
-            asChild
-          />
-        </Link>
-      </div>
-
-      <div className="relative z-[999] mt-16 flex flex-col items-center justify-between md:flex-row">
-        <p className="text-sm font-light md:text-base md:font-normal">
-          Copyright &copy; {new Date().getFullYear()}{" "}
+        <div className="flex flex-col md:flex-row gap-4 md:mt-10">
           <Link
-            href=""
+            href="https://wa.me/919226139414"
             target="_blank"
             rel="noreferrer noopener"
-            className="text-white"
           >
-            TUUUUi
-          </Link>{" "}
-          {" "}
-          
-        </p>
+            <MagicButton
+              title="Text me on WhatsApp"
+              icon={<FaWhatsapp />}
+              position="right"
+              asChild
+            />
+          </Link>
+
+          <Link
+            href="mailto:thakareansh3@gmail.com"
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <MagicButton
+              title="Send an Email for Catching up"
+              icon={<FaEnvelope />}
+              position="right"
+              asChild
+            />
+          </Link>
+        </div>
+      </div>
+
+      <div className="relative z-[999] mt-16 flex flex-col items-center justify-center md:flex-row">
 
         <div className="flex items-center gap-6 md:gap-3">
           {socialMedia.map((profile) => (
