@@ -806,13 +806,37 @@
     background: var(--accent);
     color: var(--bg);
     border: none;
-    border-radius: 8px;
-    padding: 8px 16px;
+    border-radius: 999px;
+    padding: 8px 14px;
     font-family: var(--font-mono);
-    font-size: 11px;
+    font-size: 12px;
     cursor: none;
-    font-weight: 500;
+    font-weight: 700;
     letter-spacing: 0.08em;
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .honor-view-btn {
+    background: rgba(200,181,255,0.12);
+    color: var(--accent);
+    border: 1px solid rgba(200,181,255,0.18);
+    border-radius: 999px;
+    padding: 10px 16px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    cursor: none;
+    margin: 20px 0 12px;
+    transition: background 0.25s, color 0.25s, transform 0.25s;
+  }
+  .honor-view-btn:hover,
+  .honor-view-btn:focus-visible {
+    background: var(--accent);
+    color: var(--bg);
+    transform: translateY(-1px);
   }
   .cert-body { padding: 24px; }
   .cert-name { font-family: var(--font-display); font-size: 16px; font-weight: 700; margin-bottom: 6px; }
@@ -1188,6 +1212,9 @@
         <button id="view-me-btn" class="btn-ghost" style="padding: 10px 20px; font-size: 16px; border-radius: 30px; border-color: var(--accent); color: var(--accent); opacity: 0; animation: fadeIn 1s 2s forwards; cursor: pointer; z-index: 10;">
           <i class="fas fa-play" style="font-size: 12px; margin-right: 6px;"></i> View Me
         </button>
+        <a href="trophy.html" class="btn-ghost" style="padding: 10px 20px; font-size: 16px; border-radius: 30px; border-color: var(--accent); color: var(--accent); opacity: 0; animation: fadeIn 1s 2s forwards; cursor: pointer; z-index: 10; margin-left: 10px; display: inline-flex; align-items: center; text-decoration: none;">
+          <i class="fas fa-trophy" style="font-size: 12px; margin-right: 6px;"></i> View Trophies
+        </a>
       </div>
     </h1>
     <div id="paragraph-video-container" style="display: none; width: 100%; max-width: 800px; margin-top: 32px; border-radius: 16px; overflow: hidden; border: 1px solid var(--border); box-shadow: 0 20px 40px rgba(0,0,0,0.5); position: relative; z-index: 10;">
@@ -1198,7 +1225,8 @@
     </p>
     <div class="hero-actions">
       <a href="#projects" class="btn-primary"><i class="fas fa-arrow-right"></i> View My Work</a>
-      <a href="Ansh_resume.pdf" download class="btn-ghost"><i class="fas fa-download"></i> Resume</a>
+      <a href="trophy.html" class="btn-ghost"><i class="fas fa-trophy"></i> View Trophies</a>
+      <a href="Ansh_thakare_resume_final.pdf" download class="btn-ghost"><i class="fas fa-download"></i> Resume</a>
     </div>
     <div class="hero-stats">
       <div class="stat-item">
@@ -1371,7 +1399,7 @@
     <a class="footer-li" href="https://www.linkedin.com/in/ansh-thakare-053783359" target="_blank" rel="noopener" aria-label="Visit Ansh on LinkedIn">
       <i class="fab fa-linkedin"></i><span>LinkedIn</span>
     </a>
-    <a class="footer-resume" href="Ansh_resume.pdf" download aria-label="Download Ansh's resume">
+    <a class="footer-resume" href="Ansh_thakare_resume_final.pdf" download aria-label="Download Ansh's resume">
       <i class="fas fa-file-arrow-down"></i><span>Resume</span>
     </a>
   </div>
@@ -1556,9 +1584,9 @@ window.addEventListener('scroll', () => {
 
 // DATA
 const honors = [
-  { badge: '🥇 1st Prize · Overall Winner', badgeClass: 'gold', num: '01', title: 'Pragyantra National AI Hackathon', desc: 'Won 1st prize across all domains at a national-level AI hackathon. Built a deployable AI solution in an intense 8-hour sprint against national competitors.', tags: ['National Level', 'AI Hackathon', '8-Hour Sprint', 'Winner'] },
-  { badge: '🥉 3rd Prize', badgeClass: 'teal', num: '02', title: 'Symbiosis National Level Project Expo', desc: 'Secured 3rd prize at a national-level project exhibition, presenting a strong technical solution before external evaluators and professional panels.', tags: ['Project Expo', 'External Jury', 'Presentation'] },
-  { badge: '⚡ Organizer Secretariat', badgeClass: '', num: '03', title: 'IGNISIA National AI Hackathon', desc: 'Contributed to event coordination, participant handling, operational planning, and technical problem-tracking for a National AI Hackathon.', tags: ['Leadership', 'Coordination', 'Operations'] },
+  { badge: '🥇 1st Prize · Overall Winner', badgeClass: 'gold', num: '01', title: 'Pragyantra National AI Hackathon', desc: 'Won 1st prize across all domains at a national-level AI hackathon. Built a deployable AI solution in an intense 8-hour sprint against national competitors.', tags: ['National Level', 'AI Hackathon', '8-Hour Sprint', 'Winner'], certPath: 'assets/special_certificates/national_level_ai_hackathon.jpeg' },
+  { badge: '🥉 3rd Prize', badgeClass: 'teal', num: '02', title: 'Symbiosis National Level Project Expo', desc: 'Secured 3rd prize at a national-level project exhibition, presenting a strong technical solution before external evaluators and professional panels.', tags: ['Project Expo', 'External Jury', 'Presentation'], certPath: 'assets/special_certificates/national_level_project_expo_certificate.jpeg' },
+  { badge: '⚡ Organizer Secretariat', badgeClass: '', num: '03', title: 'IGNISIA National AI Hackathon', desc: 'Contributed to event coordination, participant handling, operational planning, and technical problem-tracking for a National AI Hackathon.', tags: ['Leadership', 'Coordination', 'Operations'], certPath: 'assets/special_certificates/Ignisia_AI_hackathon_organizer.jpeg' },
 ];
 
 const projects = [
@@ -1618,9 +1646,16 @@ document.getElementById('honors-grid').innerHTML = honors.map((h, i) => `
     <span class="honor-badge ${h.badgeClass}">${h.badge}</span>
     <h3 class="honor-title">${h.title}</h3>
     <p class="honor-desc">${h.desc}</p>
+    ${h.certPath ? `<button type="button" class="honor-view-btn" data-cert="${h.certPath}">View Certificate</button>` : ''}
     <div class="honor-tags">${h.tags.map(t => `<span class="htag">${t}</span>`).join('')}</div>
   </article>
 `).join('');
+document.querySelectorAll('.honor-view-btn').forEach(btn => {
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    openModal(btn.dataset.cert);
+  });
+});
 
 // RENDER PROJECTS (paginated)
 const projGrid = document.getElementById('projects-grid');
@@ -1693,14 +1728,16 @@ function makeCertCard(c, i) {
   el.innerHTML = `
     <div class="cert-img-wrap">
       <img src="${c.path}" alt="${c.name}" loading="lazy">
-      <div class="cert-overlay"><button class="cert-view-btn">View Proof</button></div>
     </div>
     <div class="cert-body">
       <div class="cert-name">${c.name}</div>
       <div class="cert-issuer">${c.issuer}</div>
+      <button type="button" class="cert-view-btn">View Proof</button>
     </div>
   `;
   el.addEventListener('click', () => openModal(c.path));
+  const viewBtn = el.querySelector('.cert-view-btn');
+  viewBtn.addEventListener('click', e => { e.stopPropagation(); openModal(c.path); });
   return el;
 }
 function renderCerts(count) {
