@@ -1369,18 +1369,34 @@ function playVideoToEnd(video) {
 }
 
 async function runEntrySequence() {
-  await playVideoToEnd(entryIntroVideo);
+  const removalTimeout = wait(9000).then(() => 'timeout');
+  const result = await Promise.race([playVideoToEnd(entryIntroVideo), removalTimeout]);
+
   entryOverlay.classList.add('done');
   document.body.classList.remove('entry-active');
+  entryOverlay.style.pointerEvents = 'none';
+
+  if (result === 'timeout') {
+    console.warn('Entry overlay removed after timeout to restore page interaction.');
+  }
+
   await wait(650);
   heroName.scrollIntoView({ behavior: 'smooth', block: 'center' });
 }
 
 window.addEventListener('load', () => {
   if (!entryIntroVideo) return;
+
+  entryOverlay.addEventListener('click', () => {
+    entryOverlay.classList.add('done');
+    document.body.classList.remove('entry-active');
+    entryOverlay.style.pointerEvents = 'none';
+  });
+
   runEntrySequence().catch(() => {
     entryOverlay.classList.add('done');
     document.body.classList.remove('entry-active');
+    entryOverlay.style.pointerEvents = 'none';
   });
 });
 
