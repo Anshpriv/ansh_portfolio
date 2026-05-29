@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ansh — The Trophy Room</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+:root{
+  --gold:rgba(200,168,90,1);
+  --gold-dim:rgba(200,168,90,0.5);
+  --gold-faint:rgba(200,168,90,0.12);
+  --white:rgba(255,255,255,1);
+  --white-dim:rgba(255,255,255,0.5);
+  --white-faint:rgba(255,255,255,0.07);
+  --text-muted:rgba(255,255,255,0.35);
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:#050505;
+  color:#fff;
+  font-family:'Montserrat',sans-serif;
+  font-weight:300;
+  overflow-x:hidden;
+  cursor:none;
+}
+
+/* CUSTOM CURSOR */
+#cursor{
+  position:fixed;
+  width:8px;height:8px;
+  background:#fff;
+  border-radius:50%;
+  pointer-events:none;
+  z-index:10000;
+  transform:translate(-50%,-50%);
+  transition:transform .1s ease, width .3s ease, height .3s ease, opacity .3s ease;
+  mix-blend-mode:difference;
+}
+#cursor-ring{
+  position:fixed;
+  width:32px;height:32px;
+  border:1px solid rgba(255,255,255,.4);
+  border-radius:50%;
+  pointer-events:none;
+  z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .12s ease, width .3s ease, height .3s ease;
+  mix-blend-mode:difference;
+}
+
+/* FILM GRAIN */
+#grain{
+  position:fixed;
+  top:0;left:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  z-index:9998;
+  opacity:.045;
+}
+
+/* LETTERBOX */
+.letterbox{
+  position:fixed;
+  left:0;width:100%;
+  height:70px;
+  background:#000;
+  z-index:9990;
+  transition:height 1.8s cubic-bezier(.77,0,.18,1);
+}
+.letterbox.top{top:0}
+.letterbox.bot{bottom:0}
+.letterbox.open{height:0}
+
+/* CURTAIN / INTRO */
+#curtain{
+  position:fixed;inset:0;
+  background:#000;
+  z-index:9980;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:0;
+  transition:opacity 1.5s ease;
+}
+#curtain.gone{opacity:0;pointer-events:none}
+
+.curtain-line{
+  overflow:hidden;
+  margin:6px 0;
+}
+.curtain-line span{
+  display:block;
+  transform:translateY(100%);
+  transition:transform 1s cubic-bezier(.16,1,.3,1);
+}
+.curtain-line span.up{transform:translateY(0)}
+
+#c-presented{
+  font-family:'Montserrat',sans-serif;
+  font-size:.65rem;
+  letter-spacing:.6em;
+  color:#fff;
+  text-transform:uppercase;
+  font-weight:700;
+}
+#c-name{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.5rem,8vw,5rem);
+  font-weight:700;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:#fff;
+}
+#c-presents{
+  font-family:'Montserrat',sans-serif;
+  font-size:.65rem;
+  letter-spacing:.6em;
+  color:#fff;
+  text-transform:uppercase;
+  font-weight:700;
+}
+
+.curtain-divider{
+  width:0;
+  height:1px;
+  background:rgba(255,255,255,.2);
+  margin:28px 0;
+  transition:width 1.2s .8s ease;
+}
+.curtain-divider.expand{width:120px}
+
+#c-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(.9rem,2vw,1.1rem);
+  font-style:italic;
+  color:#fff;
+  letter-spacing:.08em;
+  overflow:hidden;
+  font-weight:600;
+}
+#c-tagline span{
+  display:block;
+  transform:translateY(100%);
+  transition:transform 1s .9s cubic-bezier(.16,1,.3,1);
+}
+#c-tagline span.up{transform:translateY(0)}
+
+#enter-btn{
+  margin-top:48px;
+  padding:14px 48px;
+  background:transparent;
+  border:1px solid rgba(255,255,255,.6);
+  color:#fff;
+  font-family:'Montserrat',sans-serif;
+  font-size:.6rem;
+  font-weight:700;
+  letter-spacing:.5em;
+  text-transform:uppercase;
+  cursor:none;
+  opacity:0;
+  transition:opacity .8s 1.8s ease, border-color .3s, color .3s, transform .3s;
+}
+#enter-btn.show{opacity:1}
+#enter-btn:hover{
+  border-color:rgba(255,255,255,.6);
+  color:#fff;
+  transform:translateY(-2px);
+}
+
+/* MAIN CONTENT */
+#main{opacity:0;transition:opacity 1.2s .3s ease}
+#main.show{opacity:1}
+
+/* NAV */
+nav{
+  position:fixed;
+  top:0;left:0;right:0;
+  z-index:500;
+  padding:28px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  opacity:0;
+  transition:opacity 1s 1s ease;
+}
+nav.show{opacity:1}
+.nav-logo{
+  font-family:'Cormorant Garamond',serif;
+  font-size:1.6rem;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.7);
+}
+.nav-year{
+  font-size:.6rem;
+  letter-spacing:.4em;
+  color:rgba(255,255,255,.3);
+  text-transform:uppercase;
+}
+
+/* HERO */
+#hero{
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  position:relative;
+  overflow:hidden;
+}
+
+.hero-bg-line{
+  position:absolute;
+  top:0;bottom:0;
+  width:1px;
+  background:linear-gradient(to bottom, transparent, rgba(255,255,255,.06) 30%, rgba(255,255,255,.06) 70%, transparent);
+}
+.hero-bg-line:nth-child(1){left:20%}
+.hero-bg-line:nth-child(2){left:40%}
+.hero-bg-line:nth-child(3){right:40%}
+.hero-bg-line:nth-child(4){right:20%}
+
+.hero-inner{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:60px;
+  width:min(1200px,94%);
+  margin:0 auto;
+  position:relative;
+  z-index:2;
+}
+
+.hero-content{
+  text-align:left;
+  max-width:620px;
+  flex:1 1 420px;
+}
+
+.hero-portrait{
+  flex:0 0 min(380px, 36vw);
+  width:min(380px, 36vw);
+  opacity:1;
+  transform:none;
+  animation:none;
+  background: radial-gradient(circle at top left, rgba(255,255,255,0.12), rgba(255,255,255,0.02));
+  border-radius: 32px;
+  padding: 18px;
+  border: 1px solid rgba(255,255,255,0.18);
+  box-shadow: 0 60px 140px rgba(0,0,0,0.55);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-portrait img{
+  width:100%;
+  height:auto;
+  display:block;
+  border-radius:24px;
+  filter: brightness(1.2) contrast(1.25);
+  object-fit:cover;
+}
+
+.hero-pre{
+  font-size:.6rem;
+  letter-spacing:.6em;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  margin-bottom:24px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:all 1s .2s ease;
+}
+.hero-pre.show{opacity:1;transform:none}
+
+#hero-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(5rem,14vw,10rem);
+  font-weight:300;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  line-height:1;
+  opacity:0;
+  transform:translateY(40px);
+  transition:all 1.4s .4s cubic-bezier(.16,1,.3,1);
+}
+#hero-title.show{opacity:1;transform:none}
+
+.hero-sub{
+  margin-top:24px;
+  font-size:clamp(1rem,2vw,1.4rem);
+  letter-spacing:.35em;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  font-style:italic;
+  font-family:'Cormorant Garamond',serif;
+  opacity:0;
+  transform:translateY(20px);
+  transition:all 1s .8s ease;
+}
+.hero-sub.show{opacity:1;transform:none}
+
+.scroll-indicator{
+  position:absolute;
+  bottom:48px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:12px;
+  opacity:0;
+  animation:fadeIn 1s 2s forwards;
+}
+.scroll-indicator span{
+  font-size:.55rem;
+  letter-spacing:.4em;
+  color:rgba(255,255,255,.25);
+  text-transform:uppercase;
+}
+.scroll-track{
+  width:1px;
+  height:50px;
+  background:rgba(255,255,255,.1);
+  position:relative;
+  overflow:hidden;
+}
+.scroll-track::after{
+  content:'';
+  position:absolute;
+  top:-100%;
+  left:0;
+  width:1px;
+  height:100%;
+  background:#fff;
+  animation:scrollTrack 2s 2s infinite ease-in-out;
+}
+@keyframes scrollTrack{
+  0%{top:-100%;opacity:1}
+  100%{top:200%;opacity:0}
+}
+@keyframes fadeIn{to{opacity:1}}
+
+/* CHAPTER DIVIDER */
+.chapter{
+ padding:80px 5% 30px;
+  max-width:1100px;
+  margin:0 auto;
+}
+.chapter-label{
+  display:flex;
+  align-items:center;
+  gap:24px;
+  margin-bottom:80px;
+  opacity:0;
+  transform:translateY(30px);
+  transition:all 1s ease;
+}
+.chapter-label.show{opacity:1;transform:none}
+.chapter-num{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(8rem,15vw,14rem);
+  font-weight:300;
+  color:rgba(255,255,255,.05);
+  line-height:1;
+}
+.chapter-info{border-left:1px solid rgba(255,255,255,.1);padding-left:24px}
+.chapter-info .sup{
+  font-size:.55rem;
+  letter-spacing:.5em;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  margin-bottom:6px;
+}
+.chapter-info h2{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(3rem,6vw,5rem);
+  font-weight:300;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+}
+
+/* TROPHY ITEMS */
+.trophy-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:40px;
+  align-items:center;
+   margin-bottom:80px;
+  opacity:0;
+  transition:all 1.3s cubic-bezier(.16,1,.3,1);
+}
+.trophy-row.from-l{transform:translateX(-50px)}
+.trophy-row.from-r{transform:translateX(50px)}
+.trophy-row.show{opacity:1;transform:none}
+.trophy-row.flip{direction:rtl}
+.trophy-row.flip *{direction:ltr}
+
+/* TROPHY FRAME */
+.t-frame{
+  position:relative;
+  aspect-ratio:1;
+}
+.t-frame-inner{
+  width:100%;
+  height:100%;
+  border:1px solid rgba(255,255,255,.1);
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  transition:border-color .5s;
+}
+.t-frame-inner::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background:radial-gradient(ellipse at 50% 100%, rgba(255,255,255,.04), transparent 70%);
+}
+.trophy-row:hover .t-frame-inner{border-color:rgba(255,255,255,.25)}
+
+.t-img{
+  width:88%;
+  height:88%;
+  object-fit:contain;
+  filter:grayscale(30%) brightness(.9);
+  transition:filter .5s, transform .6s cubic-bezier(.16,1,.3,1);
+}
+.trophy-row:hover .t-img{
+  filter:grayscale(0%) brightness(1.1);
+  transform:scale(1.04);
+}
+
+.t-emoji{
+  font-size:clamp(3rem,6vw,5rem);
+  opacity:.7;
+  transition:opacity .4s, transform .6s cubic-bezier(.16,1,.3,1);
+}
+.trophy-row:hover .t-emoji{opacity:1;transform:scale(1.08)}
+
+/* corners */
+.c{position:absolute;width:20px;height:20px;border-color:rgba(255,255,255,.2);border-style:solid;transition:border-color .5s, width .4s, height .4s}
+.trophy-row:hover .c{border-color:rgba(255,255,255,.5);width:28px;height:28px}
+.c.tl{top:10px;left:10px;border-width:1px 0 0 1px}
+.c.tr{top:10px;right:10px;border-width:1px 1px 0 0}
+.c.bl{bottom:10px;left:10px;border-width:0 0 1px 1px}
+.c.br{bottom:10px;right:10px;border-width:0 1px 1px 0}
+
+.t-count{
+  position:absolute;
+  bottom:14px;
+  right:18px;
+  font-size:.55rem;
+  letter-spacing:.35em;
+  color:rgba(255,255,255,.2);
+}
+
+/* TROPHY TEXT */
+
+.t-eyebrow{
+  font-size:.9rem;
+  letter-spacing:.5em;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.t-title{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(2.4rem,5vw,4.2rem);
+  font-weight:300;
+  letter-spacing:.05em;
+  text-transform:uppercase;
+  line-height:1.2;
+  margin-bottom:24px;
+}
+.t-badge{
+  display:inline-block;
+  padding:7px 18px;
+  border:1px solid;
+  font-size:.9rem;
+  padding:10px 24px;
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  margin-bottom:20px;
+}
+.t-badge.gold{border-color:var(--gold-dim);color:var(--gold)}
+.t-badge.silver{border-color:rgba(180,180,180,.4);color:rgba(200,200,200,.9)}
+.t-badge.blue{border-color:rgba(120,150,200,.4);color:rgba(150,180,230,.9)}
+.t-body{
+  font-size:.8rem;
+  color:rgba(255,255,255,.35);
+  letter-spacing:.05em;
+  line-height:2;
+  text-transform:uppercase;
+  font-size:1rem;
+  line-height:1.8;
+}
+
+/* STATS */
+#stats-section{
+  padding:40px 5% 80px;
+  max-width:1100px;
+  margin:0 auto;
+}
+.numbers-wrap{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  border-top:1px solid rgba(255,255,255,.08);
+  border-left:1px solid rgba(255,255,255,.08);
+  margin-top:60px;
+}
+.num-box{
+  border-right:1px solid rgba(255,255,255,.08);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:48px 32px;
+  opacity:0;
+  transform:translateY(20px);
+  transition:all .9s ease;
+}
+.num-box.show{opacity:1;transform:none}
+.num-box h3{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(4rem,8vw,7rem);
+  font-weight:300;
+  letter-spacing:-.02em;
+  line-height:1;
+}
+.num-box p{
+  font-size:.55rem;
+  letter-spacing:.4em;
+  color:var(--text-muted);
+  text-transform:uppercase;
+  margin-top:12px;
+}
+
+/* FOOTER */
+footer{
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:60px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+footer .f-left{
+  font-family:'Cormorant Garamond',serif;
+  font-size:.9rem;
+  font-style:italic;
+  color:rgba(255,255,255,.25);
+}
+footer .f-right{
+  font-size:.55rem;
+  letter-spacing:.4em;
+  color:rgba(255,255,255,.2);
+  text-transform:uppercase;
+}
+
+@media(max-width:900px){
+  .hero-inner{flex-direction:column;align-items:center;text-align:center;}
+  .hero-content{max-width:100%;}
+  .hero-portrait{width:min(52vw,320px);transform:none;animation:fadeUp 0.9s 1.6s forwards;}
+}
+
+@media(max-width:700px){
+  .trophy-row{grid-template-columns:1fr;gap:32px}
+  .trophy-row.flip{direction:ltr}
+  .numbers-wrap{grid-template-columns:repeat(2,1fr)}
+  footer{flex-direction:column;gap:16px;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<canvas id="grain"></canvas>
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<div class="letterbox top" id="lt"></div>
+<div class="letterbox bot" id="lb"></div>
+
+<!-- CURTAIN -->
+<div id="curtain">
+  <div class="curtain-line"><span id="c-presented">A Film by</span></div>
+  <div class="curtain-line" style="margin-top:8px"><span id="c-name">Ansh</span></div>
+  <div class="curtain-line" style="margin-top:4px"><span id="c-presents">Presents</span></div>
+  <div class="curtain-divider" id="cdiv"></div>
+  <div id="c-tagline"><span>A story told in trophies</span></div>
+  <button id="enter-btn" onclick="openCurtain()">Enter the Room</button>
+</div>
+
+<!-- MAIN -->
+<div id="main">
+
+  <nav id="nav">
+    <div class="nav-logo">Ansh</div>
+    <div class="nav-year">MMXXVI</div>
+  </nav>
+
+  <section id="hero">
+    <div class="hero-bg-line"></div>
+    <div class="hero-bg-line"></div>
+    <div class="hero-bg-line"></div>
+    <div class="hero-bg-line"></div>
+    <div class="hero-inner">
+      <div class="hero-content">
+        <div class="hero-pre" id="hp">The Trophy Room</div>
+        <h1 id="hero-title">Legacy</h1>
+        <div class="hero-sub" id="hs">Every victory has a story. This is mine.</div>
+      </div>
+      <div class="hero-portrait">
+        <img src="assets/ansh.png" alt="Ansh profile picture">
+      </div>
+    </div>
+    <div class="scroll-indicator">
+      <div class="scroll-track"></div>
+      <span>Scroll</span>
+    </div>
+  </section>
+
+  <!-- TROPHIES -->
+  <div class="chapter">
+
+    <div class="chapter-label" id="cl1">
+      <div class="chapter-num">I</div>
+      <div class="chapter-info">
+        <div class="sup">Chapter One</div>
+        <h2>Achievements</h2>
+      </div>
+    </div>
+
+    <!-- Trophy 1 -->
+    <div class="trophy-row from-l" id="tr1">
+      <div class="t-frame">
+        <div class="t-frame-inner">
+          <div class="c tl"></div><div class="c tr"></div>
+          <div class="c bl"></div><div class="c br"></div>
+          <!-- Swap src below for your actual image: assets/trophies/national_level_ai_hackathon.png -->
+          <img src="assets/trophies/national_level_ai_hackathon.png" class="t-img" alt="National AI Hackathon Trophy"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <div class="t-emoji" style="display:none">🏆</div>
+          <span class="t-count">01 — 04</span>
+        </div>
+      </div>
+      <div class="t-text">
+        <div class="t-eyebrow">National Level · 2026 · AI</div>
+        <div class="t-title">8-Hour AI<br>Hackathon</div>
+        <div class="t-badge gold">First Place Overall</div>
+        <div class="t-body">400+ teams across India<br>The stage was national.<br>The outcome, undeniable.</div>
+      </div>
+    </div>
+
+    <!-- Trophy 2 -->
+    <div class="trophy-row from-r flip" id="tr2">
+      <div class="t-frame">
+        <div class="t-frame-inner">
+          <div class="c tl"></div><div class="c tr"></div>
+          <div class="c bl"></div><div class="c br"></div>
+          <img src="assets/trophies/SIT_PUNE.png" class="t-img" alt="Pro Tech Trophy"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <div class="t-emoji" style="display:none">🥉</div>
+          <span class="t-count">02 — 04</span>
+        </div>
+      </div>
+      <div class="t-text">
+        <div class="t-eyebrow">Symbiosis International · 2026</div>
+        <div class="t-title">Pro Tech<br>2026</div>
+        <div class="t-badge silver">Third Place</div>
+        <div class="t-body">Symbiosis International University<br>Competed among the best.<br>Walked out with a podium.</div>
+      </div>
+    </div>
+
+    <!-- Trophy 3 -->
+    <div class="trophy-row from-l" id="tr3">
+      <div class="t-frame">
+        <div class="t-frame-inner">
+          <div class="c tl"></div><div class="c tr"></div>
+          <div class="c bl"></div><div class="c br"></div>
+          <img src="assets/trophies/inovision.png" class="t-img" alt="Innovision Award"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <div class="t-emoji" style="display:none">💡</div>
+          <span class="t-count">03 — 04</span>
+        </div>
+      </div>
+      <div class="t-text">
+        <div class="t-eyebrow">Project Exhibition · 2026</div>
+        <div class="t-title">Innovision<br>2026</div>
+        <div class="t-badge blue">Appreciation Award</div>
+        <div class="t-body">Recognised for innovation<br>in a competitive project exhibition.<br>Ideas that stood out.</div>
+      </div>
+    </div>
+
+    <!-- Trophy 4 -->
+    <div class="trophy-row from-r flip" id="tr4">
+      <div class="t-frame">
+        <div class="t-frame-inner">
+          <div class="c tl"></div><div class="c tr"></div>
+          <div class="c bl"></div><div class="c br"></div>
+          <img src="assets/trophies/ignisia_hackathon.png" class="t-img" alt="Ignisia Organiser"
+            onerror="this.style.display='none';this.nextElementSibling.style.display='block'">
+          <div class="t-emoji" style="display:none">⚡</div>
+          <span class="t-count">04 — 04</span>
+        </div>
+      </div>
+      <div class="t-text">
+        <div class="t-eyebrow">Student Leadership · 2026</div>
+        <div class="t-title">Ignisia<br>2026</div>
+        <div class="t-badge blue">Student Organiser</div>
+        <div class="t-body">Think. Build. Evolve.<br>Behind every great event —<br>someone made it happen.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- STATS -->
+  <div id="stats-section">
+    <div class="chapter-label" id="cl2">
+      <div class="chapter-num">II</div>
+      <div class="chapter-info">
+        <div class="sup">Chapter Two</div>
+        <h2>The Numbers</h2>
+      </div>
+    </div>
+    <div class="numbers-wrap">
+      <div class="num-box" id="nb1"><h3 id="cnt1">0</h3><p>Trophies</p></div>
+      <div class="num-box" id="nb2" style="transition-delay:.1s"><h3 id="cnt2">0</h3><p>Universities</p></div>
+      <div class="num-box" id="nb3" style="transition-delay:.2s"><h3>2026</h3><p>Biggest Year</p></div>
+      <div class="num-box" id="nb4" style="transition-delay:.3s"><h3>∞</h3><p>Future Goals</p></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="f-left">"The room where it happened."</div>
+    <div class="f-right">Ansh · 2026 · All Rights Reserved</div>
+  </footer>
+
+</div>
+
+<script>
+/* --- CURSOR --- */
+const cur=document.getElementById('cursor');
+const ring=document.getElementById('cursor-ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}
+animRing();
+document.querySelectorAll('button,a').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.width='20px';cur.style.height='20px';ring.style.width='50px';ring.style.height='50px'});
+  el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px'});
+});
+
+/* --- FILM GRAIN --- */
+const gc=document.getElementById('grain'),gx=gc.getContext('2d');
+function sz(){gc.width=window.innerWidth;gc.height=window.innerHeight}sz();
+window.addEventListener('resize',sz);
+function grain(){
+  const id=gx.createImageData(gc.width,gc.height),d=id.data;
+  for(let i=0;i<d.length;i+=4){const v=Math.random()*255;d[i]=d[i+1]=d[i+2]=v;d[i+3]=18}
+  gx.putImageData(id,0,0);setTimeout(grain,60);
+}grain();
+
+/* --- CURTAIN INTRO --- */
+let curtainDone=false;
+window.addEventListener('load',()=>{
+  setTimeout(()=>{
+    document.querySelectorAll('.curtain-line span').forEach((s,i)=>{setTimeout(()=>s.classList.add('up'),i*200)});
+    document.getElementById('cdiv').classList.add('expand');
+    document.querySelector('#c-tagline span').classList.add('up');
+    setTimeout(()=>document.getElementById('enter-btn').classList.add('show'),2000);
+  },400);
+});
+
+function openCurtain(){
+  window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  document.getElementById('curtain').classList.add('gone');
+  document.getElementById('main').classList.add('show');
+  document.getElementById('lt').classList.add('open');
+  document.getElementById('lb').classList.add('open');
+  document.getElementById('nav').classList.add('show');
+  curtainDone=true;
+  setTimeout(()=>{
+    document.getElementById('hp').classList.add('show');
+    document.getElementById('hero-title').classList.add('show');
+    document.getElementById('hs').classList.add('show');
+  },600);
+}
+
+/* Also allow keyboard Enter */
+document.addEventListener('keydown',e=>{if((e.key==='Enter'||e.key===' ')&&!curtainDone)openCurtain()});
+
+/* --- SCROLL REVEALS --- */
+const revealEls=[
+  {id:'cl1'},{id:'cl2'},
+  {id:'tr1'},{id:'tr2'},{id:'tr3'},{id:'tr4'},
+  {id:'nb1'},{id:'nb2'},{id:'nb3'},{id:'nb4'},
+];
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('show');
+      if(e.target.id==='nb1')count('cnt1',4,300);
+      if(e.target.id==='nb2')count('cnt2',3,400);
+    }
+  });
+},{threshold:.2});
+revealEls.forEach(({id})=>{const el=document.getElementById(id);if(el)obs.observe(el)});
+
+function count(id,target,delay){
+  setTimeout(()=>{
+    let n=0;
+    const iv=setInterval(()=>{
+      n++;document.getElementById(id).textContent=n;
+      if(n>=target)clearInterval(iv);
+    },180);
+  },delay);
+}
+
+/* --- PARALLAX subtle on hero lines --- */
+window.addEventListener('scroll',()=>{
+  const s=window.scrollY;
+  document.querySelectorAll('.hero-bg-line').forEach((l,i)=>{
+    l.style.transform=`translateY(${s*(0.05+i*.02)}px)`;
+  });
+});
+</script>
+</body>
+</html>
