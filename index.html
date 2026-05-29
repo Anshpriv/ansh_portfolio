@@ -1060,14 +1060,23 @@
     .nav-links {
       display: flex;
       flex-wrap: wrap;
+      flex-direction: column;
+      align-items: center;
       justify-content: center;
       gap: 10px;
       width: 100%;
       margin-top: 6px;
     }
+    .nav-links li {
+      width: 100%;
+      text-align: center;
+    }
     .nav-links a {
-      padding: 10px 14px;
-      font-size: 11px;
+      display: inline-flex;
+      justify-content: center;
+      width: 100%;
+      padding: 12px 14px;
+      font-size: 12px;
     }
     .projects-grid { grid-template-columns: 1fr; }
     .certs-grid { grid-template-columns: 1fr; }
@@ -1076,9 +1085,12 @@
     .skills-inner { gap: 40px; }
     .journey-inner { grid-template-columns: 1fr; gap: 48px; }
     .footer-links { justify-content: center; }
+    .footer-links a { width: 100%; justify-content: center; }
     footer { flex-direction: column; text-align: center; }
-    .hero-actions { flex-direction: column; align-items: flex-start; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
     .hero-actions a { width: 100%; justify-content: center; }
+    .view-toggle-btns { flex-wrap: wrap; justify-content: center; }
+    .view-toggle-btns button { min-width: 160px; width: 100%; max-width: 320px; }
     .contact-form { padding: 0 16px; }
     .contact-form.open { padding: 28px 16px; }
     .hero-stats { gap: 24px; }
@@ -1091,13 +1103,21 @@
     section, #hero { padding: 60px 16px; }
     .hero-name { font-size: clamp(42px, 18vw, 72px); }
     .hero-tagline { font-size: 15px; line-height: 1.8; }
-    .hero-actions { gap: 14px; }
+    .hero-actions { gap: 14px; flex-direction: column; align-items: stretch; }
+    .hero-actions a { width: 100%; }
+    .nav-links {
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
     .nav-links a { width: 100%; justify-content: center; }
     .skills-grid { grid-template-columns: 1fr; }
     .marquee-wrapper { padding: 14px 0; }
     .marquee-item { padding: 0 18px; font-size: 12px; }
     .contact-btn { width: 100%; justify-content: center; }
     .cert-view-btn { width: 100%; }
+    .view-toggle-btns { flex-direction: column; gap: 12px; }
+    .view-toggle-btns button { width: 100%; max-width: 100%; }
     .projects-header { gap: 24px; }
     .section-title { font-size: clamp(38px, 14vw, 58px); }
     .contact-sub { font-size: 16px; }
