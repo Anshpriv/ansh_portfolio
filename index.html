@@ -10,41 +10,51 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
   :root {
-    --bg: #03020a;
-    --bg2: #07060f;
-    --surface: rgba(255,255,255,0.04);
-    --border: rgba(255,255,255,0.08);
-    --border-hot: rgba(255,255,255,0.18);
-    --text: #f0eeff;
-    --muted: rgba(240,238,255,0.45);
-    --dim: rgba(240,238,255,0.25);
-    --accent: #c8b5ff;
-    --accent2: #7efff5;
-    --accent3: #ffca7a;
-    --accent4: #ff7eb3;
-    --glow: rgba(200,181,255,0.18);
-    --font-display: 'Syne', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-mono: 'DM Mono', monospace;
-  }
 
+    --bg:#000000;
+    --bg2:#080808;
+
+    --surface:rgba(255,255,255,.03);
+
+    --border:rgba(255,255,255,.08);
+    --border-hot:rgba(255,255,255,.20);
+
+    --text:#ffffff;
+
+    --muted:rgba(255,255,255,.55);
+    --dim:rgba(255,255,255,.25);
+
+    --accent:#ffffff;
+    --accent2:#d6d6d6;
+    --accent3:#ffffff;
+    --accent4:#ffffff;
+
+    --glow:rgba(255,255,255,.10);
+
+}
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   html { scroll-behavior: smooth; }
 
-  body {
-    min-height: 100vh;
-    background: radial-gradient(circle at top left, rgba(200,181,255,0.16), transparent 24%),
-                radial-gradient(circle at 90% 8%, rgba(126,255,245,0.10), transparent 18%),
-                linear-gradient(180deg, #05020c 0%, #03020a 100%);
+  body{
+
+background:
+radial-gradient(
+circle at center,
+rgba(255,255,255,.03),
+transparent 55%
+),
+
+linear-gradient(
+180deg,
+#000000 0%,
+#050505 100%
+);
+color: #ffffff;
+}
+  strong, b {
     color: var(--text);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.65;
-    overflow-x: hidden;
-    cursor: none;
-    text-rendering: optimizeLegibility;
-    -webkit-font-smoothing: antialiased;
+    font-weight: 700;
   }
   body.entry-active {
     overflow: hidden;
@@ -245,12 +255,43 @@
     animation: fadeUp 0.9s 0.35s forwards;
   }
   .hero-name .line1 { display: block; }
-  .hero-name .line2 {
-    display: block;
-    -webkit-text-stroke: 1.5px var(--accent);
-    color: transparent;
-    position: relative;
-  }
+  .hero-name .line2{
+
+background:
+linear-gradient(
+180deg,
+#ffffff,
+#bdbdbd,
+#ffffff
+);
+
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+body::after{
+
+content:'';
+
+position:fixed;
+
+top:0;
+bottom:0;
+
+left:20%;
+
+width:1px;
+
+background:
+rgba(255,255,255,.04);
+
+pointer-events:none;
+
+box-shadow:
+20vw 0 rgba(255,255,255,.04),
+40vw 0 rgba(255,255,255,.04),
+60vw 0 rgba(255,255,255,.04);
+
+}
+}
   .hero-name .line2::after {
     content: attr(data-text);
     position: absolute;
@@ -508,7 +549,8 @@
     overflow: hidden;
   }
   .honor-card {
-    background: var(--bg2);
+    background:rgba(255,255,255,.02);
+    backdrop-filter:blur(10px);
     padding: 48px 40px;
     position: relative;
     overflow: hidden;
@@ -591,7 +633,8 @@
     gap: 24px;
   }
   .project-card {
-    background: var(--bg2);
+    background:rgba(255,255,255,.02);
+    backdrop-filter:blur(10px);
     border: 1px solid var(--border);
     border-radius: 20px;
     overflow: hidden;
@@ -694,7 +737,8 @@
     margin-top: 8px;
   }
   .skill-item {
-    background: var(--bg2);
+    background:rgba(255,255,255,.02);
+    backdrop-filter:blur(10px);
     border: 1px solid var(--border);
     border-radius: 16px;
     padding: 28px 20px;
@@ -716,7 +760,15 @@
     color: var(--muted);
     text-transform: uppercase;
   }
+.project-card:hover,
+.honor-card:hover,
+.cert-card:hover{
 
+box-shadow:
+0 0 25px rgba(255,255,255,.08),
+0 0 80px rgba(255,255,255,.04);
+
+}
   /* JOURNEY */
   #journey { background: #050311; }
   .journey-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 100px; }
@@ -782,7 +834,8 @@
     margin-top: 72px;
   }
   .cert-card {
-    background: var(--bg2);
+    background:rgba(255,255,255,.02);
+    backdrop-filter:blur(10px);
     border: 1px solid var(--border);
     border-radius: 16px;
     overflow: hidden;
@@ -1331,7 +1384,7 @@
 <section id="certificates">
   <div class="max-w">
     <p class="section-label reveal">Proof of Work</p>
-    <h2 class="section-title reveal" style="--d:100ms">Receipts</h2>
+    <h2 class="section-title reveal" style="--d:100ms">Certificates</h2>
     <div class="certs-grid" id="certs-grid"></div>
     <div class="view-toggle-btns">
       <button id="view-more-certs-btn" class="btn-primary" style="cursor:none;border:none;">View All Certificates</button>
@@ -1595,9 +1648,9 @@ const projects = [
   { title: 'Kisan Setu', desc: 'Decision-support app for farmers that recommends suitable crops using soil, weather, and environmental parameters through ML.', img: 'assets/generated/kisan-setu.jpg', stack: ['Python', 'Streamlit', 'SQL', 'ML'], link: 'https://kisaan-setu-1.onrender.com/' },
   { title: 'Helmet Accident Detection', desc: 'Smart helmet safety system concept using sensors to detect accidents and trigger real-time alerts to emergency contacts.', img: 'assets/generated/smart-helmet.jpg', stack: ['IoT', 'Sensors', 'HTML'], link: 'https://neuroguard.netlify.app/' },
   { title: 'English to SQL Converter', desc: 'NLP-powered web app that turns plain English queries into SQL commands, making database access easier for non-technical users.', img: 'assets/generated/hackathon-ai.jpg', stack: ['Python', 'NLP', 'SQL'], link: 'https://english-to-sql-pbl2.onrender.com' },
-  { title: 'Student Attendance Tracker', desc: 'Teacher-friendly attendance platform for creating classes, managing students, and marking attendance with a simple workflow.', img: 'assets/generated/capstone-portal.jpg', stack: ['Python', 'Streamlit', 'SQL', 'Supabase'], link: 'https://attendancestraker.onrender.com' },
-  { title: 'Anomaly Detection', desc: 'Transaction anomaly detection web app that surfaces suspicious patterns from uploaded or user-provided financial data.', img: 'assets/generated/hackathon-ai.jpg', stack: ['TypeScript', 'Vite', 'Tailwind CSS'], link: 'https://cyberpluse.netlify.app/' },
-  { title: 'Movie Picker', desc: 'Playful React app that removes movie-night indecision by spinning through a curated set of random film suggestions.', img: 'assets/generated/capstone-portal.jpg', stack: ['HTML5', 'Tailwind CSS', 'React 18'], link: 'https://pop-spin-cinema.netlify.app/' },
+  { title: 'Student Attendance Tracker', desc: 'Teacher-friendly attendance platform for creating classes, managing students, and marking attendance with a simple workflow.', img: 'assets/generated/attendance-tracker.jpg', stack: ['Python', 'Streamlit', 'SQL', 'Supabase'], link: 'https://attendancestraker.onrender.com' },
+  { title: 'Anomaly Detection', desc: 'Transaction anomaly detection web app that surfaces suspicious patterns from uploaded or user-provided financial data.', img: 'assets/generated/anomaly-detection.jpg', stack: ['TypeScript', 'Vite', 'Tailwind CSS'], link: 'https://cyberpluse.netlify.app/' },
+  { title: 'Movie Picker', desc: 'Playful React app that removes movie-night indecision by spinning through a curated set of random film suggestions.', img: 'assets/generated/movie-picker.jpg', stack: ['HTML5', 'Tailwind CSS', 'React 18'], link: 'https://pop-spin-cinema.netlify.app/' },
 ];
 
 const skills = [
